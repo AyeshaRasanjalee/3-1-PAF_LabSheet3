@@ -5,7 +5,7 @@
 <head>
 <%@page import="com.Item"%>
 <%
-
+//Insert item----------------------------------
 
 if (request.getParameter("itemCode") != null)
 {
@@ -14,6 +14,15 @@ if (request.getParameter("itemCode") != null)
 	request.getParameter("itemName"),
 	request.getParameter("itemPrice"),
 	request.getParameter("itemDesc"));
+	session.setAttribute("statusMsg", stsMsg);
+}
+//delete item----------------------------------
+
+if (request.getParameter("itemID") != null)
+{
+	Item itemObj = new Item();
+	String stsMsg = itemObj.deleteItem(request.getParameter("itemID"));
+	
 	session.setAttribute("statusMsg", stsMsg);
 }
 %>
@@ -28,6 +37,16 @@ if (request.getParameter("itemCode") != null)
 		Item price: <input name="itemPrice" type="text"><br>
 		Item description: <input name="itemDesc" type="text"><br>
 	<input name="btnSubmit" type="submit" value="Save">
+
+	<%
+out.print(session.getAttribute("statusMsg"));
+%>
+<br>
+<%
+Item itemObj = new Item();
+out.print(itemObj.readItems());
+%>
+	
 </form>
 </body>
 </html>
